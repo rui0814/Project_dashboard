@@ -93,7 +93,9 @@ STATE_FULL_NAME = {
 
 @st.cache_resource
 def load_state_geojson():
-    with open("us_states.geojson", "r") as f:
+    base_dir = Path(__file__).parent
+    geo_path = base_dir / "us_states.geojson"
+    with open(geo_path, "r") as f:
         gj = json.load(f)
     return gj
 
