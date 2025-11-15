@@ -105,8 +105,8 @@ def load_artifacts():
     model_path = base_dir / "us_accidents_logreg_sklearn.pkl"
     meta_path = base_dir / "us_accidents_logreg_meta.pkl"
     
-    sk_model = joblib.load("us_accidents_logreg_sklearn.pkl")
-    meta = joblib.load("us_accidents_logreg_meta.pkl")
+    sk_model = joblib.load(model_path)
+    meta = joblib.load(meta_path)
     return sk_model, meta
 
 sk_model, meta = load_artifacts()
