@@ -106,6 +106,10 @@ def load_artifacts():
 
     model_path = base_dir / "us_accidents_logreg_sklearn.pkl"
     meta_path = base_dir / "us_accidents_logreg_meta.pkl"
+
+    if not model_path.exists() or not meta_path.exists():
+        st.error(f"Files in {base_dir}: {[p.name for p in base_dir.iterdir()]}")
+        raise FileNotFoundError("Model or meta .pkl file not found in app directory.")
     
     sk_model = joblib.load(model_path)
     meta = joblib.load(meta_path)
