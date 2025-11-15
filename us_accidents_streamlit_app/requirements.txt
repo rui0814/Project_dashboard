@@ -2,4 +2,7 @@ streamlit
 pandas
 numpy
 joblib
+shap
+matplotlib
+pydeck
 scikit-learn
