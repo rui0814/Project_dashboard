@@ -9,6 +9,8 @@ import shap
 import matplotlib.pyplot as plt
 import json
 import pydeck as pdk
+from pathlib import Path
+
 
 # ---------------- PAGE CONFIG ----------------
 st.set_page_config(
@@ -18,6 +20,23 @@ st.set_page_config(
 
 st.title("🚦 US Accidents – Severity Prediciton Dashboard")
 st.caption("Binary model: Severity_Bin = 0 (non-severe), 1 = severe")
+
+st.markdown("""
+    <style>
+    div.stButton > button:first-child {
+        background-color: #28a745 !important;  /* green */
+        color: white !important;
+        border-radius: 8px;
+        padding: 0.5em 1em;
+        font-size: 16px;
+        border: none;
+    }
+    div.stButton > button:first-child:hover {
+        background-color: #218838 !important;  /* darker green on hover */
+        color: white !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
 
 # Map from state codes used in the model to full names in the GeoJSON
 STATE_FULL_NAME = {
@@ -81,6 +100,11 @@ def load_state_geojson():
 # ---------------- LOAD MODEL & META ----------------
 @st.cache_resource
 def load_artifacts():
+    base_dir = Path(__file__).parent
+
+    model_path = base_dir / "us_accidents_logreg_sklearn.pkl"
+    meta_path = base_dir / "us_accidents_logreg_meta.pkl"
+    
     sk_model = joblib.load("us_accidents_logreg_sklearn.pkl")
     meta = joblib.load("us_accidents_logreg_meta.pkl")
     return sk_model, meta
