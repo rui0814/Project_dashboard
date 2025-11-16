@@ -18,7 +18,7 @@ st.set_page_config(
     layout="wide",
 )
 
-st.title("🚦 US Accidents – Severity Prediciton Dashboard")
+st.title("🚦 US Accidents – Severity Prediction Dashboard")
 st.caption("Binary model: Severity_Bin = 0 (non-severe), 1 = severe")
 
 st.markdown("""
