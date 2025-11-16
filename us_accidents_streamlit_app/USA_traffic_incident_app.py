@@ -127,10 +127,37 @@ POS_CLASS = 1
 POS_INDEX = CLASS_LABELS.index(POS_CLASS)
 
 # ---------------- SHAP EXPLAINER ----------------
+# @st.cache_resource
+# def load_explainer():
+#     # very simple background: all features = 0 (already scaled numerics)
+#     background = np.zeros((1, len(feature_names)))
+#     explainer = shap.LinearExplainer(
+#         sk_model,
+#         background,
+#         feature_names=feature_names
+#     )
+#     return explainer
+
+# explainer = load_explainer()
+
 @st.cache_resource
 def load_explainer():
-    # very simple background: all features = 0 (already scaled numerics)
-    background = np.zeros((1, len(feature_names)))
+    base_dir = Path(__file__).parent
+    bkg_path = base_dir / "shap_bkg.csv"
+
+    # Load background data
+    df_bkg = pd.read_csv(bkg_path)
+
+    # Ensure columns are in the same order as the model expects
+    df_bkg = df_bkg[feature_names]
+
+    # Convert to numpy matrix
+    background = df_bkg.values
+
+    # (Optional) Limit background size to keep SHAP fast
+    if background.shape[0] > 200:
+        background = background[:200, :]
+
     explainer = shap.LinearExplainer(
         sk_model,
         background,
